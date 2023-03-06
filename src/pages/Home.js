@@ -1,10 +1,12 @@
 import styles from '../styles/home.module.css';
+import PropTypes from 'prop-types';
+import { Comment } from '../components';
 
 const Home = ({posts}) => {
   return (
     <div className={styles.postsList}>
       {posts.map(posts =>
-        <div className={styles.postWrapper}>
+        <div className={styles.postWrapper} key={`post-${posts._id}`}>
         <div className={styles.postHeader}>
           <div className={styles.postAvatar}>
             <img
@@ -40,15 +42,9 @@ const Home = ({posts}) => {
           </div>
 
           <div className={styles.postCommentsList}>
-            <div className={styles.postCommentsItem}>
-              <div className={styles.postCommentHeader}>
-                <span className={styles.postCommentAuthor}>Bill</span>
-                <span className={styles.postCommentTime}>a minute ago</span>
-                <span className={styles.postCommentLikes}>22</span>
-              </div>
-
-              <div className={styles.postCommentContent}>Random comment</div>
-            </div>
+            {posts.comments.map((comment)=>(
+              <Comment comment ={comment} />
+            ))}
           </div>
         </div>
       </div>
@@ -56,5 +52,9 @@ const Home = ({posts}) => {
     </div>
   );
 };
+
+Home.propTypes={
+  posts:PropTypes.array.isRequired,
+}
 
 export default Home;
