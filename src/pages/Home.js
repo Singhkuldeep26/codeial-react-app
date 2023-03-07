@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Comment } from '../components';
 
 const Home = ({posts}) => {
+  console.log(posts);
   return (
     <div className={styles.postsList}>
       {posts.map(posts =>
