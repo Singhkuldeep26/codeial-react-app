@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify'; 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,7 +14,9 @@ const Signup = () => {
   const [signingUp, setSigningUp] = useState('');
   
   const auth = useAuth();
-  const navigate = useNavigate();
+  const navigate=useNavigate();
+  console.log(navigate);
+  
 
 
   const handleFormSubmit = async (e) => {
@@ -48,7 +50,7 @@ const Signup = () => {
     const response = await auth.signup(name, email, password, confirmPassword);
 
     if (response.success) {
-        navigate("/login");
+        navigate('/login');
         setSigningUp(false);
 
       return toast('User registered successfully, please login now', {
@@ -64,6 +66,10 @@ const Signup = () => {
 
     setSigningUp(false);
   };
+
+  if(auth.user){
+    return <Navigate Replace to="/" />;
+  }
 
   return (
     <form className={styles.loginForm} onSubmit={handleFormSubmit}>

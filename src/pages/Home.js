@@ -1,4 +1,5 @@
 import { useEffect,useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Comment,Loader } from '../components';
 import { getPosts } from "../api";
@@ -26,8 +27,8 @@ const Home =()=> {
   }
   return (
     <div className={styles.postsList}>
-      {posts.map(posts =>
-        <div className={styles.postWrapper} key={`post-${posts._id}`}>
+      {posts.map((post) =>(
+        <div className={styles.postWrapper} key={`post-${post._id}`}>
         <div className={styles.postHeader}>
           <div className={styles.postAvatar}>
             <img
@@ -35,11 +36,21 @@ const Home =()=> {
               alt="user-pic"
             />
             <div>
-              <span className={styles.postAuthor}>{posts.user.name}</span>
+              <Link
+                  to={{
+                    pathname:`/user/${post.user._id}`,
+                    state:{
+                      user:post.user,
+                    },
+                  }}
+                  className={styles.postAuthor}
+                >
+                  {post.user.name}
+              </Link>
               <span className={styles.postTime}>a minute ago</span>
             </div>
           </div>
-          <div className={styles.postContent}>{posts.content}</div>
+          <div className={styles.postContent}>{post.content}</div>
 
           <div className={styles.postActions}>
             <div className={styles.postLike}>
@@ -63,13 +74,13 @@ const Home =()=> {
           </div>
 
           <div className={styles.postCommentsList}>
-            {posts.comments.map((comment)=>(
+            {post.comments.map((comment)=>(
               <Comment comment ={comment} />
             ))}
           </div>
         </div>
       </div>
-      )}
+      ))}
     </div>
   );
 };
